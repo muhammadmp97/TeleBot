@@ -1,0 +1,21 @@
+{
+    "name": "webpajooh/telebot",
+    "description": "Develope your telegram bot easily!",
+    "keywords": ["telegram", "telegram bot", "telegram bot api", "telegram sdk", "telegram php"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WebPajooh",
+            "email": "webpajooh@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "TeleBot\\": "src/"
+        }
+    }
+}
