@@ -2,4 +2,4 @@
 Develope your telegram bot easily!
 
 ## Example
-<img src="https://i.ibb.co/YkcdHPS/example.png>
+<p align="left"><img src="https://i.ibb.co/YkcdHPS/example.png width="800"></p>
