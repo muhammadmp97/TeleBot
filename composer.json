@@ -16,6 +16,7 @@
     "autoload": {
         "psr-4": {
             "TeleBot\\": "src/"
-        }
+        },
+        "files": ["src/helpers.php"]
     }
 }
