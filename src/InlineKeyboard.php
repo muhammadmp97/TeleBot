@@ -5,6 +5,8 @@ namespace TeleBot;
 class InlineKeyboard
 {
     private $buttons = [];
+    private $columns = 0;
+    private $rtl = false;
 
     public function __construct()
     {
@@ -25,8 +27,33 @@ class InlineKeyboard
         return $this;
     }
 
+    public function chunk(int $columns)
+    {
+        $this->columns = $columns;
+
+        return $this;
+    }
+
+    public function rightToLeft()
+    {
+        $this->rtl = true;
+
+        return $this;
+    }
+
     public function get()
     {
-        return json_encode(['inline_keyboard' => [$this->buttons]]);
+        $buttons = $this->columns ? array_chunk($this->buttons, $this->columns) : [$this->buttons];
+
+        if ($this->rtl) {
+            $rtlButtons = [];
+            foreach ($buttons as $buttonRow) {
+                $rtlButtons[] = array_reverse($buttonRow);
+            }
+
+            $buttons = $rtlButtons;
+        }
+
+        return json_encode(['inline_keyboard' => $buttons]);
     }
 }
