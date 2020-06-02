@@ -9,6 +9,8 @@ class ReplyKeyboard
     private $selective;
 
     private $buttons = [];
+    private $columns = 0;
+    private $rtl = false;
 
     public function __construct($resizeKeyboard = false, $oneTimeKeyboard = false, $selective = false)
     {
@@ -30,10 +32,44 @@ class ReplyKeyboard
         return $this;
     }
 
+    public function addButtons(...$buttons)
+    {
+        foreach ($buttons as $button) {
+            $this->buttons[] = $button;
+        }
+
+        return $this;
+    }
+
+    public function chunk(int $columns)
+    {
+        $this->columns = $columns;
+
+        return $this;
+    }
+
+    public function rightToLeft()
+    {
+        $this->rtl = true;
+
+        return $this;
+    }
+
     public function get()
     {
+        $buttons = $this->columns ? array_chunk($this->buttons, $this->columns) : [$this->buttons];
+
+        if ($this->rtl) {
+            $rtlButtons = [];
+            foreach ($buttons as $buttonRow) {
+                $rtlButtons[] = array_reverse($buttonRow);
+            }
+
+            $buttons = $rtlButtons;
+        }
+        
         return json_encode([
-            'keyboard' => [$this->buttons],
+            'keyboard' => $buttons,
             'resize_keyboard' => $this->resizeKeyboard,
             'one_time_keyboard' => $this->oneTimeKeyboard,
             'selective' => $this->selective
