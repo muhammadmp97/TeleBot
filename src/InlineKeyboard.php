@@ -15,14 +15,29 @@ class InlineKeyboard
 
     public function addButton($text, $url = '', $loginUrl = '', $callbackData = '', $switchInlineQuery = '', $switchInlineQueryCurrentChat = '')
     {
-        $this->buttons[] = [
-            'text' => $text,
-            'url' => $url,
-            'login_url' => $loginUrl,
-            'callback_data' => $callbackData,
-            'switch_inline_query' => $switchInlineQuery,
-            'switch_inline_query_current_chat' => $switchInlineQueryCurrentChat
-        ];
+        $button = ['text' => $text];
+
+        if ($url) {
+            $button['url'] = $url;
+        }
+
+        if ($loginUrl) {
+            $button['login_url'] = $loginUrl;
+        }
+
+        if ($callbackData) {
+            $button['callback_data'] = $callbackData;
+        }
+
+        if ($switchInlineQuery) {
+            $button['switch_inline_query'] = $switchInlineQuery;
+        }
+
+        if ($switchInlineQuery) {
+            $button['switch_inline_query_current_chat'] = $switchInlineQueryCurrentChat;
+        }
+
+        $this->buttons[] = $button;
 
         return $this;
     }
