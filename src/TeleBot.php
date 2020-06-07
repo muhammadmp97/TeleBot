@@ -27,7 +27,7 @@ class TeleBot
         if ($text == $command) {
             call_user_func($closure);
             return;
-        } elseif (! $this->isNullArray(sscanf($text, $command))) {
+        } elseif ($this->isMatch($text, $command)) {
             $params = sscanf($text, $command);
             call_user_func_array($closure, $params);
         }
@@ -44,10 +44,11 @@ class TeleBot
         return $httpResponse->result;
     }
 
-    private function isNullArray($array)
+    private function isMatch($text, $command)
     {
-        return empty(array_filter($array, function ($element) {
-            return $element !== null;
-        }));
+        $map = ['%d' => '(\d+)', '%s' => '(\S+)'];
+
+        $pattern = '/^' . str_replace(array_keys($map), array_values($map), $command) . '$/';
+        return preg_match($pattern, $text) === 1;
     }
 }
