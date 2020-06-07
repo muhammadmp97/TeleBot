@@ -48,7 +48,7 @@ class TeleBot
     {
         $map = ['%d' => '(\d+)', '%s' => '(\S+)'];
 
-        $pattern = '/^' . str_replace(array_keys($map), array_values($map), $command) . '$/';
+        $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $format)) . '$/';
         return preg_match($pattern, $text) === 1;
     }
 }
