@@ -46,7 +46,7 @@ class TeleBot
 
     private function isMatch($text, $command)
     {
-        $map = ['%d' => '(\d+)', '%s' => '(\S+)'];
+        $map = ['%d' => '(\d+)', '%s' => '(\S+)', '%c' => '(\S)'];
 
         $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $command)) . '$/';
         return preg_match($pattern, $text) === 1;
