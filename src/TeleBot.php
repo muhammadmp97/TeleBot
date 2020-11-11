@@ -2,6 +2,49 @@
 
 namespace TeleBot;
 
+/**
+ * @method setWebhook(array $parameters)
+ * @method getMe()
+ * @method sendMessage(array $parameters)
+ * @method forwardMessage(array $parameters)
+ * @method sendPhoto(array $parameters)
+ * @method sendAudio(array $parameters)
+ * @method sendDocument(array $parameters)
+ * @method sendVideo(array $parameters)
+ * @method sendAnimation(array $parameters)
+ * @method sendVoice(array $parameters)
+ * @method sendLocation(array $parameters)
+ * @method sendContact(array $parameters)
+ * @method sendPoll(array $parameters)
+ * @method sendChatAction(array $parameters)
+ * @method getUserProfilePhotos(array $parameters)
+ * @method getFile(array $parameters)
+ * @method kickChatMember(array $parameters)
+ * @method unbanChatMember(array $parameters)
+ * @method restrictChatMember(array $parameters)
+ * @method promoteChatMember(array $parameters)
+ * @method exportChatInviteLink(array $parameters)
+ * @method setChatPhoto(array $parameters)
+ * @method deleteChatPhoto(array $parameters)
+ * @method setChatTitle(array $parameters)
+ * @method pinChatMessage(array $parameters)
+ * @method unpinChatMessage(array $parameters)
+ * @method leaveChat(array $parameters)
+ * @method getChat(array $parameters)
+ * @method getChatAdministrators(array $parameters)
+ * @method getChatMembersCount(array $parameters)
+ * @method getChatMember(array $parameters)
+ * @method answerCallbackQuery(array $parameters)
+ * @method editMessageText(array $parameters)
+ * @method editMessageCaption(array $parameters)
+ * @method editMessageMedia(array $parameters)
+ * @method deleteMessage(array $parameters)
+ * @method answerInlineQuery(array $parameters)
+ * @property message
+ * @property chat
+ * @property user
+ */
+
 use TeleBot\Util\Http;
 use TeleBot\Exceptions\TeleBotException;
 
