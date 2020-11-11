@@ -8,10 +8,12 @@ use TeleBot\Exceptions\TeleBotException;
 class TeleBot
 {
     private $endpoint = 'https://api.telegram.org/bot';
+    public $update;
 
     public function __construct($token)
     {
         $this->endpoint .= $token . '/';
+        $this->update = $this->getUpdate();
     }
 
     public function getUpdate()
@@ -42,6 +44,23 @@ class TeleBot
         }
 
         return $httpResponse->result;
+    }
+
+    public function __get($name)
+    {
+        if ($name === 'message') {
+            return $this->update->message;
+        }
+
+        if ($name === 'chat') {
+            return $this->update->message->chat;
+        }
+
+        if ($name === 'user') {
+            return $this->update->message->from;
+        }
+
+        throw new \Exception("Property $name doesn't exists");
     }
 
     private function isMatch($text, $command)
