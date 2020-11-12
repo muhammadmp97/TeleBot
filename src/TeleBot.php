@@ -92,15 +92,27 @@ class TeleBot
     public function __get($name)
     {
         if ($name === 'message') {
-            return $this->update->message;
+            if ($this->update->callback_query) {
+                return $this->update->callback_query->message;
+            } elseif ($this->update->message) {
+                return $this->update->message;
+            }
         }
 
         if ($name === 'chat') {
-            return $this->update->message->chat;
+            if ($this->update->callback_query) {
+                return $this->update->callback_query->message->chat;
+            } elseif ($this->update->message) {
+                return $this->update->message->chat;
+            }
         }
 
         if ($name === 'user') {
-            return $this->update->message->from;
+            if (isset($this->update->callback_query)) {
+                return $this->update->callback_query->from;
+            } elseif (isset($this->update->message)) {
+                return $this->update->message->from;
+            }
         }
 
         throw new \Exception("Property $name doesn't exists");
