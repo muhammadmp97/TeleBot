@@ -18,3 +18,6 @@ You can access to the message, the sender of the message and the chat by three p
 
 ## Did you see a problem?
 Create an issue and explain your problem, I'll help you soon!
+
+## Made with TeleBot
+- <a href="https://github.com/WebPajooh/AntiBot">AntiBot</a>
