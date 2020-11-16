@@ -92,17 +92,17 @@ class TeleBot
     public function __get($name)
     {
         if ($name === 'message') {
-            if ($this->update->callback_query) {
+            if (isset($this->update->callback_query)) {
                 return $this->update->callback_query->message;
-            } elseif ($this->update->message) {
+            } elseif (isset($this->update->message)) {
                 return $this->update->message;
             }
         }
 
         if ($name === 'chat') {
-            if ($this->update->callback_query) {
+            if (isset($this->update->callback_query)) {
                 return $this->update->callback_query->message->chat;
-            } elseif ($this->update->message) {
+            } elseif (isset($this->update->message)) {
                 return $this->update->message->chat;
             }
         }
