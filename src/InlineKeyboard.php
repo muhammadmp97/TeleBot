@@ -71,4 +71,9 @@ class InlineKeyboard
 
         return json_encode(['inline_keyboard' => $buttons]);
     }
+
+    public function __toString()
+    {
+        return $this->get();
+    }
 }

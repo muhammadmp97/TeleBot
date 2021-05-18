@@ -75,4 +75,9 @@ class ReplyKeyboard
             'selective' => $this->selective
         ]);
     }
+
+    public function __toString()
+    {
+        return $this->get();
+    }
 }
