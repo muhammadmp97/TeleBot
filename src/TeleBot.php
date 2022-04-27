@@ -73,7 +73,8 @@ class TeleBot
             call_user_func($closure);
             return;
         } elseif ($this->isMatch($text, $command)) {
-            $params = sscanf($text, $command);
+            preg_match($this->createRegexPattern($command), $text, $params);
+            $params = array_slice($params, 1);
             call_user_func_array($closure, $params);
         }
     }
@@ -120,9 +121,16 @@ class TeleBot
 
     private function isMatch($text, $command)
     {
-        $map = ['%d' => '(\d+)', '%s' => '(\S+)', '%c' => '(\S)'];
+        $pattern = $this->createRegexPattern($command);
 
-        $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $command)) . '$/';
         return preg_match($pattern, $text) === 1;
+    }
+
+    private function createRegexPattern($command)
+    {
+        $map = ['%d' => '(\d+)', '%s' => '(\S+)', '%c' => '(\S)', '%p' => '(.*)'];
+        $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $command)) . '$/';
+
+        return $pattern;
     }
 }
