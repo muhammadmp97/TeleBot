@@ -64,19 +64,50 @@ class TeleBot
         return json_decode(file_get_contents('php://input'));
     }
 
-    public function listen($command, $closure)
+    public function listen($command, $closure, $thenDie = true)
     {
-        $update = $this->getUpdate();
-        $text = (isset($update->callback_query)) ? $update->callback_query->data : $update->message->text;
+        $text = $this->hasCallbackQuery() ?
+            $this->update->callback_query->data :
+            $this->update->message->text;
 
         if ($text == $command) {
             call_user_func($closure);
-            return;
-        } elseif ($this->isMatch($text, $command)) {
+            return $this->dieIf($thenDie);
+        }
+        
+        if ($this->isMatch($text, $command)) {
             preg_match($this->createRegexPattern($command), $text, $params);
             $params = array_slice($params, 1);
             call_user_func_array($closure, $params);
+            return $this->dieIf($thenDie);
         }
+    }
+
+    private function dieIf(bool $condition)
+    {
+        if ($condition) {
+            die();
+        }
+    }
+
+    public function hasCallbackQuery()
+    {
+        return isset($this->update->callback_query);
+    }
+
+    private function isMatch($text, $command)
+    {
+        $pattern = $this->createRegexPattern($command);
+
+        return preg_match($pattern, $text) === 1;
+    }
+
+    private function createRegexPattern($command)
+    {
+        $map = ['%d' => '(\d+)', '%s' => '(\S+)', '%c' => '(\S)', '%p' => '(.*)'];
+        $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $command)) . '$/';
+
+        return $pattern;
     }
 
     public function __call($name, $params)
@@ -116,21 +147,6 @@ class TeleBot
             }
         }
 
-        throw new \Exception("Property $name doesn't exists");
-    }
-
-    private function isMatch($text, $command)
-    {
-        $pattern = $this->createRegexPattern($command);
-
-        return preg_match($pattern, $text) === 1;
-    }
-
-    private function createRegexPattern($command)
-    {
-        $map = ['%d' => '(\d+)', '%s' => '(\S+)', '%c' => '(\S)', '%p' => '(.*)'];
-        $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $command)) . '$/';
-
-        return $pattern;
+        throw new TeleBotException("Property $name doesn't exists");
     }
 }
