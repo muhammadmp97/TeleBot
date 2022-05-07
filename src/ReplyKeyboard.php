@@ -60,12 +60,7 @@ class ReplyKeyboard
         $buttons = $this->columns ? array_chunk($this->buttons, $this->columns) : [$this->buttons];
 
         if ($this->rtl) {
-            $rtlButtons = [];
-            foreach ($buttons as $buttonRow) {
-                $rtlButtons[] = array_reverse($buttonRow);
-            }
-
-            $buttons = $rtlButtons;
+            $buttons = array_map(fn ($buttonRow) => array_reverse($buttonRow), $buttons);
         }
         
         return json_encode([
