@@ -13,6 +13,16 @@ class InlineKeyboard
         return $this;
     }
 
+    public function addUrlButton($text, $url)
+    {
+        return $this->addButton($text, $url);
+    }
+
+    public function addCallbackButton($text, $data)
+    {
+        return $this->addButton($text, null, null, $data);
+    }
+
     public function addButton($text, $url = '', $loginUrl = '', $callbackData = '', $switchInlineQuery = '', $switchInlineQueryCurrentChat = '')
     {
         $button = ['text' => $text];
