@@ -9,7 +9,7 @@ A minimal tool for Telegram bot developers
 ## How to use
 
 ### Start point
-We start by creating an instance from `TeleBot` class:
+We start by creating an instance of `TeleBot` class:
 
     try {
         $tg = new TeleBot('YOUR_BOT_TOKEN');
@@ -23,7 +23,7 @@ There are short ways to access the `update` object and some important fields. I 
     $tg->chat
     $tg->user
 
-You also can use `hasCallbackQuery()` method, when you want to check if the `update ` object has a `callback_query` field.
+You also can use `hasCallbackQuery()` method, when you want to check if the `update` object has a `callback_query` field.
 
 ### Methods
 Thanks to [magic methods](https://www.php.net/manual/en/language.oop5.magic.php), we can use API methods without implementing them, and just call them by name and pass an array as parameter:
