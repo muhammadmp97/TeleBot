@@ -86,3 +86,4 @@ Create an issue and explain your problem!
 ## Made with TeleBot
 
 - <a  href="https://github.com/WebPajooh/AntiBot">AntiBot</a>
+- <a  href="https://github.com/WebPajooh/MediumBot">MediumBot</a>
