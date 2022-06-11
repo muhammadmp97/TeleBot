@@ -78,6 +78,15 @@ Then use it like this:
         'reply_markup' => $keyboard,
     ]);
 
+### Extend it!
+You may want to add some methods to TeleBot class to improve your code readability and avoid duplication. Look at this simple example as an inspiration:
+
+    TeleBot::extend('isReply', function () {
+        return property_exists($this->message, 'reply_to_message');
+    });
+
+    // if ($tg->isReply()) { ... }
+
 ## Have you seen a problem?
 
 Create an issue and explain your problem!

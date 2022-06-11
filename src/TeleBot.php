@@ -47,9 +47,12 @@ namespace TeleBot;
 
 use TeleBot\Util\Http;
 use TeleBot\Exceptions\TeleBotException;
+use TeleBot\Traits\Extendable;
 
 class TeleBot
 {
+    use Extendable;
+
     private $endpoint = 'https://api.telegram.org/bot';
     public $update;
 
@@ -112,6 +115,13 @@ class TeleBot
 
     public function __call($name, $params)
     {
+        if (static::hasExtension($name)) {
+            $extension = static::$extensions[$name];
+            $extension = $extension->bindTo($this, static::class);
+
+            return $extension(...$params);
+        }
+        
         $httpResponse = Http::post($this->endpoint . $name, $params[0]);
 
         if (!$httpResponse->ok) {
