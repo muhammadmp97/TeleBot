@@ -65,7 +65,7 @@ Use this if you need to log something into a `log.txt` file:
 TeleBot includes two classes for making keyboards; `InlineKeyboard` and `ReplyKeyboard`. Here you see an example:
 
     $keyboard = new InlineKeyboard()
-        ->addCallbackButton('📕 Help, 'help_callback')
+        ->addCallbackButton('📕 Help', 'help_callback')
         ->addUrlButton('📱 Share', 'https://t.me/share/url?url=https://t.me/your_awesome_bot&text=Some text')
         ->chunk(1)
         ->rightToLeft()
