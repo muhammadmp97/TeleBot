@@ -1,3 +1,4 @@
+
 # TeleBot
 
 A minimal tool for Telegram bot developers
@@ -38,7 +39,9 @@ You may define some routes to your bot features; define them by `listen()` metho
             'chat_id' => $tg->user->id,
             'text' => 'Hello, world!',
         ]);
-    });
+    }, false);
+    
+The third parameter that is true by default, makes you able to terminate the script after running a command. In the previous example we passed `false` so script continues.
 
 You can also get parameters and use them as variables:
 
