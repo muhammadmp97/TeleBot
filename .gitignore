@@ -1,5 +1,2 @@
-/vendor/
-/.idea/
-test.php
-src/autoload.php
-config.php
+/vendor
+/.idea
