@@ -8,11 +8,6 @@ class InlineKeyboard
     private $columns = 0;
     private $rtl = false;
 
-    public function __construct()
-    {
-        return $this;
-    }
-
     public function addUrlButton($text, $url)
     {
         return $this->addButton($text, $url);

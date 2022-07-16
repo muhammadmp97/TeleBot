@@ -17,8 +17,6 @@ class ReplyKeyboard
         $this->resizeKeyboard = $resizeKeyboard;
         $this->oneTimeKeyboard = $oneTimeKeyboard;
         $this->selective = $selective;
-
-        return $this;
     }
 
     public function addButton($text, $requestContact = false, $requestLocation = false)
