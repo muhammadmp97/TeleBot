@@ -53,12 +53,13 @@ class TeleBot
 {
     use Extendable;
 
-    private $endpoint = 'https://api.telegram.org/bot';
+    private $token;
+    
     public $update;
 
     public function __construct($token)
     {
-        $this->endpoint .= $token . '/';
+        $this->token = $token;
         $this->update = $this->getUpdate();
     }
 
@@ -122,7 +123,7 @@ class TeleBot
             return $extension(...$params);
         }
         
-        $httpResponse = Http::post($this->endpoint . $name, $params[0]);
+        $httpResponse = Http::post("https://api.telegram.org/bot{$this->token}/{$name}", $params[0]);
 
         if (!$httpResponse->ok) {
             throw new TeleBotException($httpResponse->description);
