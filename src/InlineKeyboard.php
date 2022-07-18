@@ -5,7 +5,7 @@ namespace TeleBot;
 class InlineKeyboard
 {
     private $buttons = [];
-    private $columns = 0;
+    private $buttonsPerRow = 0;
     private $rtl = false;
 
     public function addUrlButton($text, $url)
@@ -47,9 +47,9 @@ class InlineKeyboard
         return $this;
     }
 
-    public function chunk(int $columns)
+    public function chunk(int|array $buttonsPerRow)
     {
-        $this->columns = $columns;
+        $this->buttonsPerRow = $buttonsPerRow;
 
         return $this;
     }
@@ -63,13 +63,31 @@ class InlineKeyboard
 
     public function get()
     {
-        $buttons = $this->columns ? array_chunk($this->buttons, $this->columns) : [$this->buttons];
+        $buttons = $this->buttonsPerRow ? $this->chunkButtons() : [$this->buttons];
 
         if ($this->rtl) {
             $buttons = array_map(fn ($buttonRow) => array_reverse($buttonRow), $buttons);
         }
 
         return json_encode(['inline_keyboard' => $buttons]);
+    }
+
+    private function chunkButtons(): array
+    {
+        if (is_int($this->buttonsPerRow)) {
+            return array_chunk($this->buttons, $this->buttonsPerRow);
+        }
+
+        $buttonCount = count($this->buttons);
+        $rowIndex = 0;
+        $rows = [];
+        for ($i = 0; $i < $buttonCount;) {
+            $rows[] = array_slice($this->buttons, $i, $this->buttonsPerRow[$rowIndex] ?? 100);
+            $i += $this->buttonsPerRow[$rowIndex] ?? 100;
+            $rowIndex++;
+        }
+
+        return $rows;
     }
 
     public function __toString()

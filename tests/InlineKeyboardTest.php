@@ -56,7 +56,7 @@ class InlineKeyboardTest extends TestCase
         ]), $keyboard);
     }
 
-    public function test_inline_keyboard_can_be_chucked()
+    public function test_inline_keyboard_can_be_chucked_by_int()
     {
         $keyboard = (new InlineKeyboard())
             ->addCallbackButton('Start', 'start')
@@ -72,5 +72,25 @@ class InlineKeyboardTest extends TestCase
         $this->assertCount(2, $keyboardObject->inline_keyboard[0]);
         $this->assertCount(2, $keyboardObject->inline_keyboard[1]);
         $this->assertCount(1, $keyboardObject->inline_keyboard[2]);
+    }
+
+    public function test_inline_keyboard_can_be_chucked_by_array()
+    {
+        $keyboard = (new InlineKeyboard())
+            ->addCallbackButton('Start', 'start')
+            ->addCallbackButton('Stop', 'stop')
+            ->addCallbackButton('Like', 'like')
+            ->addCallbackButton('Dislike', 'dislike')
+            ->addCallbackButton('Contact', 'contact')
+            ->chunk([2, 1])
+            ->get();
+        
+        $keyboardObject = json_decode($keyboard);
+
+        $this->assertCount(2, $keyboardObject->inline_keyboard[0]);
+        $this->assertCount(1, $keyboardObject->inline_keyboard[1]);
+        $this->assertCount(2, $keyboardObject->inline_keyboard[2]);
+
+        
     }
 }
