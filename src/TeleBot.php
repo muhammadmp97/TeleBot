@@ -157,6 +157,6 @@ class TeleBot
             }
         }
 
-        throw new TeleBotException("Property $name doesn't exists");
+        throw new TeleBotException("Property $name doesn't exist!");
     }
 }
