@@ -1,3 +1,5 @@
+[![Latest Stable Version](http://poser.pugx.org/webpajooh/telebot/v)](https://packagist.org/packages/webpajooh/telebot) [![Total Downloads](http://poser.pugx.org/webpajooh/telebot/downloads)](https://packagist.org/packages/webpajooh/telebot) [![PHP Version Require](http://poser.pugx.org/webpajooh/telebot/require/php)](https://packagist.org/packages/webpajooh/telebot) [![License](http://poser.pugx.org/webpajooh/telebot/license)](https://packagist.org/packages/webpajooh/telebot)
+
 # TeleBot
 A minimal tool for Telegram bot developers
 
