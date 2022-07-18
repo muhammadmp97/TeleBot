@@ -1,10 +1,7 @@
-
 # TeleBot
-
 A minimal tool for Telegram bot developers
 
 ## Installation
-
 `composer require webpajooh/telebot`
 
 ## How to use
@@ -81,6 +78,13 @@ Then use it like this:
         'reply_markup' => $keyboard,
     ]);
 
+Consider that `chunk()` method accepts multiple numbers as well! You may pass an array like [1, 3, 2] to build such a keyboard:  
+<pre>
+[        1        ]  
+[ 2 ]  [ 3️ ]  [ 4 ]  
+[   5   ] [   6   ]  
+</pre>
+
 ### Extend it!
 You may want to add some methods to TeleBot class to improve your code readability and avoid duplication. Look at this simple example as an inspiration:
 
@@ -91,11 +95,9 @@ You may want to add some methods to TeleBot class to improve your code readabili
     // if ($tg->isReply()) { ... }
 
 ## Have you seen a problem?
-
 Create an issue and explain your problem!
 
 
 ## Made with TeleBot
-
 - <a  href="https://github.com/WebPajooh/AntiBot">AntiBot</a>
 - <a  href="https://github.com/WebPajooh/MediumBot">MediumBot</a>
