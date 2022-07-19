@@ -57,17 +57,33 @@ class TeleBot
 
     public $update;
 
+    /**
+     * Create a new TeleBot instance.
+     * 
+     * @param string $token The generated token by [@BotFather](https://t.me/BotFather), looks something like `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`.
+     * @return void
+     */
     public function __construct($token)
     {
         $this->token = $token;
         $this->update = $this->getUpdate();
     }
 
+    /**
+     * Get the update object from the incoming request.
+     * 
+     * @return object
+     */
     public function getUpdate()
     {
         return json_decode(file_get_contents('php://input'));
     }
 
+    /**
+     * @param string $command
+     * @param callable $closure
+     * @param bool $thenDie Do you want to terminate the script after executing the command?
+     */
     public function listen($command, $closure, $thenDie = true)
     {
         $text = $this->hasCallbackQuery() ?
@@ -87,6 +103,9 @@ class TeleBot
         }
     }
 
+    /**
+     * Terminate the script if `$condition` is true.
+     */
     private function dieIf(bool $condition)
     {
         if ($condition) {
@@ -94,19 +113,34 @@ class TeleBot
         }
     }
 
-    public function hasCallbackQuery()
+    /**
+     * Check if the update object has a `callback_query` field.
+     * 
+     * @return bool
+     */
+    public function hasCallbackQuery(): bool
     {
         return isset($this->update->callback_query);
     }
 
-    private function isMatch($text, $command)
+    /**
+     * Check if `$text` matches the `$command` pattern.
+     * 
+     * @return bool
+     */
+    private function isMatch(string $text, string $command): bool
     {
         $pattern = $this->createRegexPattern($command);
 
         return preg_match($pattern, $text) === 1;
     }
 
-    private function createRegexPattern($command)
+    /**
+     * Translate our specifiers to regex format.
+     * 
+     * @return string
+     */
+    private function createRegexPattern($command): string
     {
         $map = ['%d' => '(\d+)', '%s' => '(\S+)', '%c' => '(\S)', '%p' => '(.*)'];
         $pattern = '/^' . str_replace(array_keys($map), array_values($map), str_replace('/', '\/', $command)) . '$/';
@@ -114,6 +148,15 @@ class TeleBot
         return $pattern;
     }
 
+    /**
+     * Dynamically handle calls into the TeleBot instance.
+     * 
+     * @param string $name
+     * @param array $params
+     * @return mixed
+     * 
+     * @throws TeleBotException
+     */
     public function __call($name, $params)
     {
         if (static::hasExtension($name)) {
@@ -132,6 +175,14 @@ class TeleBot
         return $httpResponse->result;
     }
 
+    /**
+     * Dynamically access the update object fields.
+     * 
+     * @param string $name
+     * @return mixed
+     * 
+     * @throws TeleBotException
+     */
     public function __get($name)
     {
         $message = $this->hasCallbackQuery() ? $this->update->callback_query->message : $this->update->message;
