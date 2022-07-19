@@ -54,7 +54,7 @@ class TeleBot
     use Extendable;
 
     private $token;
-    
+
     public $update;
 
     public function __construct($token)
@@ -134,28 +134,22 @@ class TeleBot
 
     public function __get($name)
     {
+        $message = $this->hasCallbackQuery() ? $this->update->callback_query->message : $this->update->message;
+
         if ($name === 'message') {
-            if (isset($this->update->callback_query)) {
-                return $this->update->callback_query->message;
-            } elseif (isset($this->update->message)) {
-                return $this->update->message;
-            }
+            return $message;
         }
 
         if ($name === 'chat') {
-            if (isset($this->update->callback_query)) {
-                return $this->update->callback_query->message->chat;
-            } elseif (isset($this->update->message)) {
-                return $this->update->message->chat;
-            }
+            return $message->chat;
         }
 
         if ($name === 'user') {
-            if (isset($this->update->callback_query)) {
-                return $this->update->callback_query->from;
-            } elseif (isset($this->update->message)) {
-                return $this->update->message->from;
-            }
+            return $this->hasCallbackQuery() ? $this->update->callback_query->from : $message->from;
+        }
+
+        if (property_exists($this->update, $name)) {
+            return $this->update->$name;
         }
 
         throw new TeleBotException("Property $name doesn't exist!");
