@@ -78,13 +78,9 @@ class InlineKeyboard
             return array_chunk($this->buttons, $this->buttonsPerRow);
         }
 
-        $buttonCount = count($this->buttons);
-        $rowIndex = 0;
         $rows = [];
-        for ($i = 0; $i < $buttonCount;) {
-            $rows[] = array_slice($this->buttons, $i, $this->buttonsPerRow[$rowIndex] ?? 100);
-            $i += $this->buttonsPerRow[$rowIndex] ?? 100;
-            $rowIndex++;
+        while (count($this->buttons)) {
+            $rows[] = array_splice($this->buttons, 0, array_shift($this->buttonsPerRow) ?? 100);
         }
 
         return $rows;

@@ -90,7 +90,5 @@ class InlineKeyboardTest extends TestCase
         $this->assertCount(2, $keyboardObject->inline_keyboard[0]);
         $this->assertCount(1, $keyboardObject->inline_keyboard[1]);
         $this->assertCount(2, $keyboardObject->inline_keyboard[2]);
-
-        
     }
 }
