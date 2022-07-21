@@ -9,7 +9,7 @@ class ReplyKeyboard
     private $selective;
 
     private $buttons = [];
-    private $columns = 0;
+    private $buttonsPerRow = 0;
     private $rtl = false;
 
     public function __construct($resizeKeyboard = false, $oneTimeKeyboard = false, $selective = false)
@@ -39,9 +39,9 @@ class ReplyKeyboard
         return $this;
     }
 
-    public function chunk(int $columns)
+    public function chunk(int|array $buttonsPerRow)
     {
-        $this->columns = $columns;
+        $this->buttonsPerRow = $buttonsPerRow;
 
         return $this;
     }
@@ -55,7 +55,7 @@ class ReplyKeyboard
 
     public function get()
     {
-        $buttons = $this->columns ? array_chunk($this->buttons, $this->columns) : [$this->buttons];
+        $buttons = $this->buttonsPerRow ? $this->chunkButtons() : [$this->buttons];
 
         if ($this->rtl) {
             $buttons = array_map(fn ($buttonRow) => array_reverse($buttonRow), $buttons);
@@ -67,6 +67,20 @@ class ReplyKeyboard
             'one_time_keyboard' => $this->oneTimeKeyboard,
             'selective' => $this->selective
         ]);
+    }
+
+    private function chunkButtons(): array
+    {
+        if (is_int($this->buttonsPerRow)) {
+            return array_chunk($this->buttons, $this->buttonsPerRow);
+        }
+
+        $rows = [];
+        while (count($this->buttons)) {
+            $rows[] = array_splice($this->buttons, 0, array_shift($this->buttonsPerRow) ?? 100);
+        }
+
+        return $rows;
     }
 
     public function __toString()
