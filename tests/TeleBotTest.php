@@ -20,6 +20,17 @@ class TeleBotTest extends TestCase
         $this->assertEquals(66049321, $tg->update_id);
     }
 
+    public function test_getters_work_on_callbacks()
+    {
+        $tg = new TeleBot('some-token');
+        $tg->update = json_decode($this->getFakeCallbackUpdate());
+
+        $this->assertEquals('John', $tg->user->first_name);
+        $this->assertEquals(333, $tg->message->message_id);
+        $this->assertEquals(1962800, $tg->chat->id);
+        $this->assertEquals('do_something', $tg->callback_query->data);
+    }
+
     public function test_router_works_properly_with_direct_commands()
     {
         $tg = new TeleBot('some-token');
@@ -65,6 +76,38 @@ class TeleBotTest extends TestCase
                 },
                 "date": 1655100501,
                 "text": "'.$messageText.'"
+            }
+        }';
+    }
+    
+    private function getFakeCallbackUpdate($data = 'do_something')
+    {
+        return '{
+            "update_id": 66049321,
+            "callback_query": {
+                "id": 500,
+                "from": {
+                    "id": 1962800,
+                    "first_name": "John",
+                    "username": "johndoe",
+                    "language_code": "en"
+                },
+                "message": {
+                    "message_id": 333,
+                    "from": {
+                        "id": 1962801,
+                        "first_name": "Bot",
+                        "username": "mybot",
+                        "is_bot": 1
+                    },
+                    "chat": {
+                        "id": 1962800,
+                        "first_name": "John",
+                        "username": "johndoe",
+                        "type": "private"
+                    }
+                },
+                "data": "'.$data.'"
             }
         }';
     }
