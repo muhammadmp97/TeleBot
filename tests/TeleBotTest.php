@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TeleBotTests;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 use TeleBot\TeleBot;
 
 class TeleBotTest extends TestCase
@@ -54,6 +55,44 @@ class TeleBotTest extends TestCase
             $this->assertEquals('John', $name);
             $this->assertEquals(25, $amount);
         }, false);
+    }
+
+    public function test_withDefaults_works_with_method_name()
+    {
+        $tg = new TeleBot('some-token');
+
+        $tg->setDefaults('sendMessage', ['parse_mode' => 'html']);
+
+        $object = new ReflectionObject($tg);
+
+        $this->assertEquals(['parse_mode' => 'html'], $object->getMethod('getDefaults')->invoke($tg, 'sendMessage'));
+    }
+
+    public function test_withDefaults_works_with_a_star_character()
+    {
+        $tg = new TeleBot('some-token');
+
+        $tg->setDefaults('*', ['parse_mode' => 'html']);
+
+        $object = new ReflectionObject($tg);
+
+        $this->assertEquals(['parse_mode' => 'html'], $object->getMethod('getDefaults')->invoke($tg, 'sendMessage'));
+    }
+
+    public function test_withDefaults_works_with_overrided_parameters()
+    {
+        $tg = new TeleBot('some-token');
+
+        $tg->setDefaults('*', ['parse_mode' => 'markdown']);
+
+        $tg->setDefaults([
+            'sendMessage',
+            'sendPhoto',
+        ], ['parse_mode' => 'html']);
+
+        $object = new ReflectionObject($tg);
+
+        $this->assertEquals(['parse_mode' => 'html'], $object->getMethod('getDefaults')->invoke($tg, 'sendPhoto'));
     }
 
     private function getFakeNormalMessageUpdate($messageText = 'Hello, world!')

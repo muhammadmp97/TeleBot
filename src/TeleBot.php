@@ -57,6 +57,8 @@ class TeleBot
 
     public $update;
 
+    private array $defaultParameters = [];
+
     /**
      * Create a new TeleBot instance.
      * 
@@ -149,6 +151,42 @@ class TeleBot
     }
 
     /**
+     * Set default parameters for telegram methods.
+     * 
+     * @param string|string[] $method Method name, an array of method names or '*'.
+     * @param array $params
+     */
+    public function setDefaults(string|array $method, array $params): void
+    {
+        if (is_string($method)) {
+            $this->defaultParameters[$method] = $params;
+        }
+
+        if (is_array($method)) {
+            foreach ($method as $singleMethod) {
+                $this->setDefaults($singleMethod, $params);
+            }
+        }
+    }
+
+    /**
+     * Get default parameters for a method.
+     * 
+     * @param string $method
+     * @return array
+     */
+    private function getDefaults(string $method): array
+    {
+        $defaultParameters = $this->defaultParameters[$method] ?? [];
+
+        if (isset($this->defaultParameters['*'])) {
+            $defaultParameters += $this->defaultParameters['*'];
+        }
+
+        return $defaultParameters;
+    }
+
+    /**
      * Dynamically handle calls into the TeleBot instance.
      * 
      * @param string $name
@@ -165,8 +203,9 @@ class TeleBot
 
             return $extension(...$params);
         }
-        
-        $httpResponse = Http::post("https://api.telegram.org/bot{$this->token}/{$name}", $params[0]);
+
+        $params = $params[0] + $this->getDefaults($name);
+        $httpResponse = Http::post("https://api.telegram.org/bot{$this->token}/{$name}", $params);
 
         if (!$httpResponse->ok) {
             throw new TeleBotException($httpResponse->description);

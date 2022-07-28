@@ -87,6 +87,13 @@ Consider that `chunk()` method accepts multiple numbers as well! You may pass an
 [   5   ] [   6   ]  
 </pre>
 
+### Default parameters
+Sometimes you do not want to repeat some parameters everywhere, so you can define default parameters for each method. Here are three example that makes it clear how you can use it:
+
+    $tg->setDefaults('sendMessage', ['parse_mode' => 'html']); // You will not need passing parse_mode anymore
+    $tg->setDefaults(['sendMessage', 'banChatMember'], ['chat_id' => $chatId]);
+    $tg->setDefaults('*', ['chat_id' => $chatId]); // a default parameter for all methods
+
 ### Extend it!
 You may want to add some methods to TeleBot class to improve your code readability and avoid duplication. Look at this simple example as an inspiration:
 
