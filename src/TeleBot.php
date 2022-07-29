@@ -92,6 +92,10 @@ class TeleBot
             $this->update->callback_query->data :
             $this->update->message->text;
 
+        if (is_null($text)) {
+            return;
+        }
+
         if ($text == $command) {
             call_user_func($closure);
             return $this->dieIf($thenDie);
