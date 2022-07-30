@@ -76,7 +76,7 @@ $keyboard = (new InlineKeyboard())
     ->chunk(1)
     ->rightToLeft()
     ->get();
-``
+```
 Next use it like this:
 ```php
 $tg->sendMessage([
