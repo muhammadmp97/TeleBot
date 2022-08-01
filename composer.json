@@ -1,6 +1,6 @@
 {
     "name": "webpajooh/telebot",
-    "description": "A minimal tool for Telegram bot developers",
+    "description": "A minimal library to develop your new Telegram bot",
     "keywords": ["telegram", "telegram bot", "telegram bot api", "telegram sdk", "telegram php"],
     "type": "library",
     "license": "MIT",
