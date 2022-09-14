@@ -13,7 +13,7 @@ class ReplyKeyboard
     private $buttonsPerRow = 0;
     private $rtl = false;
 
-    public function __construct($resizeKeyboard = false, $oneTimeKeyboard = false, $selective = false, $inputPlaceholder = "")
+    public function __construct($resizeKeyboard = false, $oneTimeKeyboard = false, $inputPlaceholder = '', $selective = false)
     {
         $this->resizeKeyboard = $resizeKeyboard;
         $this->oneTimeKeyboard = $oneTimeKeyboard;
@@ -74,8 +74,8 @@ class ReplyKeyboard
             'keyboard' => $buttons,
             'resize_keyboard' => $this->resizeKeyboard,
             'one_time_keyboard' => $this->oneTimeKeyboard,
+            'input_field_placeholder' => $this->inputPlaceholder,
             'selective' => $this->selective,
-            'input_field_placeholder' => $this->inputPlaceholder
         ]);
     }
 
