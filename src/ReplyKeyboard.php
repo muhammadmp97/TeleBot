@@ -13,10 +13,11 @@ class ReplyKeyboard
     private $buttonsPerRow = 0;
     private $rtl = false;
 
-    public function __construct($resizeKeyboard = false, $oneTimeKeyboard = false, $selective = false)
+    public function __construct($resizeKeyboard = false, $oneTimeKeyboard = false, $selective = false, $inputPlaceholder = "")
     {
         $this->resizeKeyboard = $resizeKeyboard;
         $this->oneTimeKeyboard = $oneTimeKeyboard;
+        $this->inputPlaceholder = $inputPlaceholder;
         $this->selective = $selective;
     }
 
