@@ -6,6 +6,7 @@ class ReplyKeyboard
 {
     private $resizeKeyboard;
     private $oneTimeKeyboard;
+    private $inputPlaceholder;
     private $selective;
 
     private $buttons = [];
@@ -52,6 +53,13 @@ class ReplyKeyboard
 
         return $this;
     }
+    
+    public function placeholder(string $inputPlaceholder)
+    {
+        $this->inputPlaceholder = $inputPlaceholder;
+
+        return $this;
+    }
 
     public function get()
     {
@@ -65,7 +73,8 @@ class ReplyKeyboard
             'keyboard' => $buttons,
             'resize_keyboard' => $this->resizeKeyboard,
             'one_time_keyboard' => $this->oneTimeKeyboard,
-            'selective' => $this->selective
+            'selective' => $this->selective,
+            'input_field_placeholder' => $this->inputPlaceholder
         ]);
     }
 
