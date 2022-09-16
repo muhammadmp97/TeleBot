@@ -11,7 +11,7 @@ class ReplyKeyboardTest extends TestCase
 {
     public function test_reply_keyboard_can_have_buttons()
     {
-        $keyboard = (new ReplyKeyboard(true, true, true))
+        $keyboard = (new ReplyKeyboard(true, true, 'Some placeholder', true))
             ->addButton('Subscribe')
             ->addButton('Unsubscribe')
             ->get();
@@ -33,6 +33,7 @@ class ReplyKeyboardTest extends TestCase
             ],
             'resize_keyboard' => true,
             'one_time_keyboard' => true,
+            'input_field_placeholder' => 'Some placeholder',
             'selective' => true,
         ]), $keyboard);
     }
@@ -62,6 +63,7 @@ class ReplyKeyboardTest extends TestCase
             ],
             'resize_keyboard' => false,
             'one_time_keyboard' => false,
+            'input_field_placeholder' => '',
             'selective' => false,
         ]), $keyboard);
     }
