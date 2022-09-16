@@ -54,13 +54,6 @@ class ReplyKeyboard
 
         return $this;
     }
-    
-    public function placeholder(string $inputPlaceholder)
-    {
-        $this->inputPlaceholder = $inputPlaceholder;
-
-        return $this;
-    }
 
     public function get()
     {
