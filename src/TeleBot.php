@@ -160,7 +160,7 @@ class TeleBot
      * @param string|string[] $method Method name, an array of method names or '*'.
      * @param array $params
      */
-    public function setDefaults(string|array $method, array $params): void
+    public function setDefaults($method, array $params): void
     {
         if (is_string($method)) {
             $this->defaultParameters[$method] = $params;

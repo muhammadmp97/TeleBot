@@ -41,7 +41,10 @@ class ReplyKeyboard
         return $this;
     }
 
-    public function chunk(int|array $buttonsPerRow)
+    /**
+     * @param  int|array  $buttonsPerRow
+     */
+    public function chunk($buttonsPerRow)
     {
         $this->buttonsPerRow = $buttonsPerRow;
 
