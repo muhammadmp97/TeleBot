@@ -208,7 +208,10 @@ class TeleBot
             return $extension(...$params);
         }
 
-        $params = $params[0] + $this->getDefaults($name);
+        $params = isset($params[0])
+            ? $params[0] + $this->getDefaults($name)
+            : $this->getDefaults($name);
+
         $httpResponse = Http::post("https://api.telegram.org/bot{$this->token}/{$name}", $params);
 
         if (!$httpResponse->ok) {
