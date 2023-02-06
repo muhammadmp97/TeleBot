@@ -59,6 +59,8 @@ class TeleBot
 
     private array $defaultParameters = [];
 
+    private array $proxy = [];
+
     /**
      * Create a new TeleBot instance.
      * 
@@ -191,6 +193,43 @@ class TeleBot
     }
 
     /**
+     * Set new proxy for use in http request (curl proxy).
+     *
+     * @param  string  $ipAddress
+     * @param  int  $port
+     * @param  string  $type  available types `http`, `https`, `socks4`, `socks5`
+     */
+    public function setProxy(string $ipAddress, int $port, string $type = 'http'): void
+    {
+        $proxyTypes = [
+            'http' => CURLPROXY_HTTP,
+            'https' => CURLPROXY_HTTPS,
+            'socks4' => CURLPROXY_SOCKS4,
+            'socks5' => CURLPROXY_SOCKS5,
+        ];
+
+        $type = strtolower($type);
+
+        if (!array_key_exists($type, $proxyTypes)) {
+            $type = 'http';
+        }
+
+        $this->proxy = [
+            'ip' => $ipAddress,
+            'port' => $port,
+            'type' => $proxyTypes[$type]
+        ];
+    }
+
+    /**
+     * Unset the proxy.
+     */
+    public function unsetProxy(): void
+    {
+        $this->proxy = [];
+    }
+
+    /**
      * Dynamically handle calls into the TeleBot instance.
      * 
      * @param string $name
@@ -212,7 +251,7 @@ class TeleBot
             ? $params[0] + $this->getDefaults($name)
             : $this->getDefaults($name);
 
-        $httpResponse = Http::post("https://api.telegram.org/bot{$this->token}/{$name}", $params);
+        $httpResponse = Http::post("https://api.telegram.org/bot{$this->token}/{$name}", $params, $this->proxy);
 
         if (!$httpResponse->ok) {
             throw new TeleBotException($httpResponse->description);

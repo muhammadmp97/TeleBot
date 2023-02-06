@@ -60,6 +60,18 @@ TeleBot translates them to regex, so it will be good to take a look at this tabl
 | Character | %c | (\S) |
 | Everything including an empty string| %p | (.*) |
 
+### Proxy
+You may set a proxy for use in http requests; set them by `setProxy()` method:
+```php
+$tg->setProxy('127.0.0.1', 8089, 'socks5');
+```
+The first parameter is for the proxy IP address. The second parameter is for the proxy port, and the third is for the proxy type. Available types are `http`, `https`, `socks4`, and `socks5`.
+
+You may unset the proxy in some cases; unset the proxy by `unsetProxy()` method:
+```php
+$tg->unsetProxy();
+```
+
 ### Logger
 Use this if you need to log something into a `log.txt` file:
 ```php
