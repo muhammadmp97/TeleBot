@@ -114,6 +114,6 @@ if ($tg->isReply()) { ... }
 Create an issue and explain your problem!
 
 ## Made with TeleBot
-- <a  href="https://github.com/WebPajooh/AntiBot">AntiBot</a>
-- <a  href="https://github.com/WebPajooh/MediumBot">MediumBot</a>
+- <a  href="https://github.com/muhammadmp97/AntiBot">AntiBot</a>
+- <a  href="https://github.com/muhammadmp97/MediumBot">MediumBot</a>
 - <a  href="https://github.com/MahdiyarGHD/ToigBot">ToigBot</a>
