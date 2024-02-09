@@ -69,9 +69,11 @@ class TeleBot
     public function __construct($token, $secretToken = null)
     {
         $this->token = $token;
+
         if (!is_null($secretToken)){
             $this->validateWebhookUpdate($secretToken);
         }
+        
         $this->update = $this->getUpdate();
     }
 
@@ -94,7 +96,6 @@ class TeleBot
     public function validateWebhookUpdate($secretToken)
     {
         $isNotValid = ($_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] ?? '') !== $secretToken;
-
         $this->dieIf($isNotValid);
     }
 
