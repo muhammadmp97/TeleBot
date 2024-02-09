@@ -63,14 +63,14 @@ class TeleBot
      * Create a new TeleBot instance.
      * 
      * @param string $token The generated token by [@BotFather](https://t.me/BotFather), looks something like `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`.
-     * @param string $secret_token The webhook secret token to be validated. If provided, the received update will be validated; otherwise, it will be ignored.
+     * @param string $secretToken The webhook secret token to be validated. If provided, the received update will be validated; otherwise, it will be ignored.
      * @return void
      */
-    public function __construct($token, $secret_token = null)
+    public function __construct($token, $secretToken = null)
     {
         $this->token = $token;
-        if (!is_null($secret_token)){
-            $this->validateWebhookUpdate($secret_token);
+        if (!is_null($secretToken)){
+            $this->validateWebhookUpdate($secretToken);
         }
         $this->update = $this->getUpdate();
     }
@@ -88,13 +88,14 @@ class TeleBot
     /**
      * Validate the received update using the provided secret token. If the update is invalid, the script will be terminated.
      *
-     * @param string $secret_token The secret token to validate the webhook update.
+     * @param string $secretToken The secret token to validate the webhook update.
      * @return void
      */
-    public function validateWebhookUpdate($secret_token)
+    public function validateWebhookUpdate($secretToken)
     {
-        $is_not_valid = ($_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] ?? '') !== $secret_token;
-        $this->dieIf($is_not_valid);
+        $isNotValid = ($_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] ?? '') !== $secretToken;
+
+        $this->dieIf($isNotValid);
     }
 
     /**
