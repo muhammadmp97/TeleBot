@@ -47,6 +47,7 @@ namespace TeleBot;
 
 use TeleBot\Util\Http;
 use TeleBot\Exceptions\TeleBotException;
+use TeleBot\Exceptions\TerminationException;
 use TeleBot\Traits\Extendable;
 
 class TeleBot
@@ -133,7 +134,7 @@ class TeleBot
     private function dieIf(bool $condition)
     {
         if ($condition) {
-            die();
+            throw new TerminationException();
         }
     }
 
