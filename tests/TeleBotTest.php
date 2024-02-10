@@ -6,6 +6,7 @@ namespace TeleBotTests;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionObject;
+use TeleBot\Exceptions\TerminationException;
 use TeleBot\TeleBot;
 
 class TeleBotTest extends TestCase
@@ -30,6 +31,24 @@ class TeleBotTest extends TestCase
         $this->assertEquals(333, $tg->message->message_id);
         $this->assertEquals(1962800, $tg->chat->id);
         $this->assertEquals('do_something', $tg->callback_query->data);
+    }
+
+    public function test_terminates_if_secret_token_didnt_match()
+    {
+        $_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] = 'password';
+
+        $this->expectException(TerminationException::class);
+
+        (new TeleBot('some-token', 'indeedpassword'));
+    }
+
+    public function test_continues_if_secret_token_matched()
+    {
+        $_SERVER['HTTP_X_TELEGRAM_BOT_API_SECRET_TOKEN'] = 'password';
+
+        $this->expectNotToPerformAssertions();
+
+        (new TeleBot('some-token', 'password'));
     }
 
     public function test_router_works_properly_with_direct_commands()
