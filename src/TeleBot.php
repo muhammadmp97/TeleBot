@@ -109,21 +109,20 @@ class TeleBot
     {
         $text = $this->hasCallbackQuery() ?
             $this->update->callback_query->data :
-            $this->update->message->text;
+            $this->update->message?->text;
 
         if (is_null($text)) {
             return;
         }
 
-        if ($text == $command) {
+        if ($text === $command) {
             call_user_func($closure);
             return $this->dieIf($thenDie);
         }
         
         if ($this->isMatch($text, $command)) {
             preg_match($this->createRegexPattern($command), $text, $params);
-            $params = array_slice($params, 1);
-            call_user_func_array($closure, $params);
+            call_user_func_array($closure, array_slice($params, 1));
             return $this->dieIf($thenDie);
         }
     }
